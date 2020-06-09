@@ -1,3 +1,4 @@
+import textwrap
 from room import Room
 from player import Player
 
@@ -46,10 +47,11 @@ while True:
     print("=====================\n")
 
     # * Prints the current room name
-    print(f"Current Location: {player.current_room.name},")
+    print(f"Location: {player.current_room.name}")
 
 # * Prints the current description (the textwrap module might be useful here).
-    print(f"{player.current_room.description} \n")
+    for line in textwrap.wrap(player.current_room.print_desc()):
+        print(line)
 
     # If the user enters "q", quit the game.
     print("Press q to exit game")
@@ -57,11 +59,10 @@ while True:
 # * Waits for user input and decides what to do.
     choice = input("Choose Direction(n, w, e, s): ").lower().strip()
 # If the user enters a cardinal direction, attempt to move to the room there.
-    try:
-        if choice in ["n", "w", "e", "s"]:
-            player.current_room = player.move(choice, player.current_room)
+    if choice in ["q", "quit", "exit"]:
+        break
+    if choice in ["n", "w", "e", "s"]:
+        player.current_room = player.move(choice, player.current_room)
 # Print an error message if the movement isn't allowed.
-        else:
-            print("Please enter a valid direction")
-    except:
-        print("Invalid input")
+    else:
+        print("Please enter a valid direction")

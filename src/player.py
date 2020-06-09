@@ -14,5 +14,7 @@ class Player:
 
         print("You cannot move in that direction.")
 
+        return current_room
+
     def __str__(self):
         return f"Player: {self.name} \n Location: {self.current_room}"
