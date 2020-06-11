@@ -1,6 +1,7 @@
 import textwrap
 from room import Room
 from player import Player
+from item import Item, Weapon
 
 # Declare all the rooms
 
@@ -35,9 +36,25 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# declare items
+
+coin = Item("gold coin", "How did this get here?")
+stick = Item("stick", "Its a stick...")
+sword = Weapon("Sword", "A long sharp blade.", "Mid", 4)
+
+# assign items to rooms
+
+room['outside'].add_room_item(coin)
+room['outside'].add_room_item(stick)
+
+room['foyer'].add_room_item(stick)
+room['foyer'].add_room_item(sword)
+
+
 #
 # Main
 #
+
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Lav", room['outside'])
@@ -49,20 +66,23 @@ while True:
     # * Prints the current room name
     print(f"Location: {player.current_room.name}")
 
-# * Prints the current description (the textwrap module might be useful here).
+    # * Prints the current description (the textwrap module might be useful here).
     for line in textwrap.wrap(player.current_room.print_desc()):
         print(line)
+
+    # * Prints the current items in the player's room
+    print(f"Items: {player.current_room.items}")
 
     # If the user enters "q", quit the game.
     print("Press q to exit game")
 
 # * Waits for user input and decides what to do.
-    choice = input("Choose Direction(n, w, e, s): ").lower().strip()
+    action = input("Choose Direction(n, w, e, s): ").lower().strip()
 # If the user enters a cardinal direction, attempt to move to the room there.
-    if choice in ["q", "quit", "exit"]:
+    if action in ["q", "quit", "exit"]:
         break
-    if choice in ["n", "w", "e", "s"]:
-        player.current_room = player.move(choice, player.current_room)
+    if action in ["n", "w", "e", "s"]:
+        player.current_room = player.move(action, player.current_room)
 # Print an error message if the movement isn't allowed.
     else:
         print("Please enter a valid direction")
