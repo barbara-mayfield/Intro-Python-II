@@ -9,7 +9,7 @@ class Room:
     def print_desc(self):
         return f"Description: {self.description}"
 
-    def add_room_item(self, item):
+    def add_item(self, item):
         self.items.append(item)
 
     def __str__(self):

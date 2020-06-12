@@ -38,23 +38,22 @@ room['treasure'].s_to = room['narrow']
 
 # declare items
 
-coin = Item("gold coin", "How did this get here?")
-stick = Item("stick", "Its a stick...")
-sword = Weapon("Sword", "A long sharp blade.", "Mid", 4)
+coin = Item("coin", "How did this get here?")
+stick = Weapon("stick", "Its a stick...", "Mid", 2)
+sword = Weapon("sword", "A long sharp blade.", "Mid", 4)
 
 # assign items to rooms
 
-room['outside'].add_room_item(coin)
-room['outside'].add_room_item(stick)
+room['outside'].add_item(coin)
+room['outside'].add_item(stick)
 
-room['foyer'].add_room_item(stick)
-room['foyer'].add_room_item(sword)
+room['foyer'].add_item(stick)
+room['foyer'].add_item(sword)
 
 
 #
 # Main
 #
-
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player("Lav", room['outside'])
@@ -73,16 +72,32 @@ while True:
     # * Prints the current items in the player's room
     print(f"Items: {player.current_room.items}")
 
+    # * Prints the player's inventory
+    print(f"Inventory: {player.inventory}")
+
     # If the user enters "q", quit the game.
-    print("Press q to exit game")
+    print("Press h for help or q to exit game")
 
 # * Waits for user input and decides what to do.
-    action = input("Choose Direction(n, w, e, s): ").lower().strip()
+# * Split the entered command and see if it has 1 or 2 words in it
+    action = input(">> ").lower().strip().split()
+    print("action input ---->", action)
 # If the user enters a cardinal direction, attempt to move to the room there.
-    if action in ["q", "quit", "exit"]:
-        break
+    if action in ["h", "help"]:
+        print("Enter n, w, e, s to move in a direction")
+        print("Enter 'get' to prompt an item pickup")
+        print("Enter: 'drop' to prompt to drop item")
     if action in ["n", "w", "e", "s"]:
         player.current_room = player.move(action, player.current_room)
+# * Implement support for the verb `get` followed by an item name.
+    if action[0] == "get":
+        item = action[1]
+        player.get_item(item)
+    if action[0] == "drop":
+        item = action[1]
+        player.drop_item(item)
+    if action in ["q", "quit", "exit"]:
+        break
 # Print an error message if the movement isn't allowed.
     else:
-        print("Please enter a valid direction")
+        print("Please enter a valid action")
