@@ -22,6 +22,7 @@ class Player():
     # add item to inventory
     def get_item(self, item):
         if self.current_room.items:
+            self.remove_item(item)
             self.inventory.append(item)
         else:
             print(f"Cannot get item")
