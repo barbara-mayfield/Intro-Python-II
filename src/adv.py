@@ -59,7 +59,7 @@ room['foyer'].add_item(sword)
 player = Player("Lav", room['outside'])
 
 # Write a loop that:
-while True:
+while player.game_over == False:
     print("=====================\n")
 
     # * Prints the current room name
@@ -72,32 +72,33 @@ while True:
     # * Prints the current items in the player's room
     print(f"Items: {player.current_room.items}")
 
-    # * Prints the player's inventory
-    print(f"Inventory: {player.inventory}")
-
     # If the user enters "q", quit the game.
     print("Press h for help or q to exit game")
 
 # * Waits for user input and decides what to do.
 # * Split the entered command and see if it has 1 or 2 words in it
-    action = input(">> ").lower().strip().split()
-    print("action input ---->", action)
+    try:
+        action = input(">> ").lower().strip().split()
 # If the user enters a cardinal direction, attempt to move to the room there.
-    if action[0] in ["h", "help"]:
-        print("Enter n, w, e, s to move in a direction")
-        print("Enter 'get [ITEM]' to prompt an item pickup")
-        print("Enter: 'drop [ITEM]' to prompt to drop item")
-    if action[0] in ["n", "w", "e", "s"]:
-        player.current_room = player.move(action, player.current_room)
+        if action[0] in ["n", "w", "e", "s"]:
+            player.current_room = player.move(action[0], player.current_room)
+        elif action[0] in ["h", "help"]:
+            print("Enter n, w, e, s to move in a direction")
+            print("Enter 'get [ITEM]' to prompt an item pickup")
+            print("Enter: 'drop [ITEM]' to prompt to drop item")
+        elif action[0] in ["i", "inventory"]:
+            print(f"Inventory: {player.inventory}")
 # * Implement support for the verb `get` followed by an item name.
-    if action[0] == "get":
-        item = action[1]
-        player.get_item(item)
-    if action[0] == "drop":
-        item = action[1]
-        player.drop_item(item)
-    if action[0] in ["q", "quit", "exit"]:
-        break
-# Print an error message if the movement isn't allowed.
-    else:
-        print("Please enter a valid action")
+        elif action[0] == "get":
+            item = action[1]
+            player.get_item(item)
+        elif action[0] == "drop":
+            item = action[1]
+            player.drop_item(item)
+        elif action[0] in ["q", "quit", "exit"]:
+            player.game_over = True
+            break
+        else:
+            print("Please enter a valid action")
+    except:
+        print("Something went wrong...")

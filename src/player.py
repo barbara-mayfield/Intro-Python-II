@@ -8,6 +8,7 @@ class Player():
         self.name = name
         self.current_room = current_room
         self.inventory = []
+        self.game_over = False
 
     def move(self, direction, current_room):
         attribute = direction + "_to"
@@ -15,6 +16,7 @@ class Player():
         if hasattr(current_room, attribute):
             return getattr(current_room, attribute)
 
+        # Print an error message if the movement isn't allowed.
         print("You cannot move in that direction.")
 
         return current_room
@@ -24,12 +26,14 @@ class Player():
         if self.current_room.items:
             self.remove_item(item)
             self.inventory.append(item)
+            print(f"You have picked up {item}.")
         else:
             print(f"Cannot get item")
 
     # drop item from inventory
     def drop_item(self, item):
         self.inventory.remove(item)
+        print(f"You have dropped {item}.")
 
     def remove_item(self, item):
         if self.current_room.items:
