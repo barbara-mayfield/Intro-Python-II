@@ -83,11 +83,11 @@ while True:
     action = input(">> ").lower().strip().split()
     print("action input ---->", action)
 # If the user enters a cardinal direction, attempt to move to the room there.
-    if action in ["h", "help"]:
+    if action[0] in ["h", "help"]:
         print("Enter n, w, e, s to move in a direction")
-        print("Enter 'get' to prompt an item pickup")
-        print("Enter: 'drop' to prompt to drop item")
-    if action in ["n", "w", "e", "s"]:
+        print("Enter 'get [ITEM]' to prompt an item pickup")
+        print("Enter: 'drop [ITEM]' to prompt to drop item")
+    if action[0] in ["n", "w", "e", "s"]:
         player.current_room = player.move(action, player.current_room)
 # * Implement support for the verb `get` followed by an item name.
     if action[0] == "get":
@@ -96,7 +96,7 @@ while True:
     if action[0] == "drop":
         item = action[1]
         player.drop_item(item)
-    if action in ["q", "quit", "exit"]:
+    if action[0] in ["q", "quit", "exit"]:
         break
 # Print an error message if the movement isn't allowed.
     else:
