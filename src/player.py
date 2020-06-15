@@ -4,8 +4,10 @@ from room import Room
 
 
 class Player():
-    def __init__(self, name, current_room):
+    def __init__(self, name, base_hp, current_room):
         self.name = name
+        self.base_hp = base_hp
+        self.profession = "Unemployed"
         self.current_room = current_room
         self.inventory = []
         self.game_over = False
@@ -41,7 +43,25 @@ class Player():
             for item in self.current_room.items:
                 self.current_room.items.remove(item)
         else:
-            print("Could not remove item")
+            print("Could not drop item")
 
     def __str__(self):
-        return f"Player: {self.name} \n Location: {self.current_room}"
+        return f"Player: {self.name}, {self.profession} \n Location: {self.current_room}"
+
+
+class Profession:
+    def __init__(self, title):
+        self.title = title
+
+    def set_hp(self, title):
+        if self.title.lower() == "warrior":
+            self.base_hp = 120
+        elif self.title.lower() == "rogue":
+            self.base_hp = 80
+        elif self.title.lower() == "druid":
+            self.base_hp = 110
+        else:
+            self.base_hp = 100
+
+    def __str__(self):
+        return f"{self.title}"

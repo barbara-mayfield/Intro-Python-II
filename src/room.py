@@ -5,9 +5,10 @@ class Room:
         self.name = name
         self.description = description
         self.items = []
+        self.is_lit = True
 
     def print_desc(self):
-        return f"Description: {self.description}"
+        return f"{self.description}"
 
     def add_item(self, item):
         self.items.append(item)
