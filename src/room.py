@@ -5,10 +5,6 @@ class Room:
         self.name = name
         self.description = description
         self.items = []
-        self.n_to = None
-        self.w_to = None
-        self.e_to = None
-        self.s_to = None
 
     def print_desc(self):
         return f"Description: {self.description}"

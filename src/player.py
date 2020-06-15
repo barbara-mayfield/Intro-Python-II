@@ -17,7 +17,8 @@ class Player():
             return getattr(current_room, attribute)
 
         # Print an error message if the movement isn't allowed.
-        print("You cannot move in that direction.")
+        else:
+            print("You cannot move in that direction.")
 
         return current_room
 
